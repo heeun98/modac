@@ -33,7 +33,7 @@ public class RegisterService {
 
         User user = User.builder()
                 .username(username)
-                .password(password)
+                .password(bCryptPasswordEncoder.encode(password))
                 .build();
 
         userRepository.save(user);

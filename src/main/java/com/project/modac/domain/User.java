@@ -16,10 +16,10 @@ public class User extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 30)
+    @Column
     private String username; //로그인시 사용자 id , 고유값
 
-    @Column(length = 30)
+    @Column
     private String password; // 로그인시 사용자 password;
 
     @Enumerated(EnumType.STRING)

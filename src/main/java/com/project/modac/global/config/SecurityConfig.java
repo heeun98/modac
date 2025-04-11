@@ -39,7 +39,7 @@ public class SecurityConfig {
 
     // 로그인 경로를 설정하기 위해 LoginFilter 생성
     LoginFilter loginFilter = new LoginFilter(jwtUtil, authenticationManager(authenticationConfiguration));
-    loginFilter.setFilterProcessesUrl("/api/auth/login"); // TODO: 로그인 경로 커스텀 "/api/auth/login"
+    loginFilter.setFilterProcessesUrl("/modac/login"); // TODO: 로그인 경로 커스텀 "/api/auth/login"
     //->경로를 커스텀 할 수 있다.
     return http
         // cors 설정
@@ -52,7 +52,7 @@ public class SecurityConfig {
         .formLogin(AbstractHttpConfigurer::disable)
         // 경로별 인가 작업
         .authorizeHttpRequests((authorize) -> authorize
-            .requestMatchers("/docs/**", "/modac/register", "/v3/**", "/api/user/register").permitAll() // TODO: 인증 생략 경로 설정  회원가입: "/api/user/register", 로그인: "/api/auth/login"
+            .requestMatchers("/docs/**", "/modac/register", "/v3/**", "/modac/login").permitAll() // TODO: 인증 생략 경로 설정  회원가입: "/api/user/register", 로그인: "/api/auth/login"
             .anyRequest().authenticated() //나머지는 인증이 된 사용자만 가능
         )
             //.authorizeHttpRequests(auth -> auth
