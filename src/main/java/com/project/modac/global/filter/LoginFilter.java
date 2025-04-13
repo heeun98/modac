@@ -2,11 +2,11 @@ package com.project.modac.global.filter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.project.modac.apiPayload.ApiResponse;
-import com.project.modac.apiPayload.code.status.CommonErrorStatus;
+import com.project.modac.apiPayload.GeneralException;
+import com.project.modac.apiPayload.code.status.ErrorStatus;
 import com.project.modac.apiPayload.code.status.SuccessStatus;
-import com.project.modac.exception.CustomException;
-import com.project.modac.exception.ErrorCode;
 import com.project.modac.global.login.dto.CustomUserDetails;
 import com.project.modac.global.login.dto.LoginRequest;
 import com.project.modac.global.login.dto.LoginResponse;
@@ -52,7 +52,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
       return authenticationManager.authenticate(authToken);
     } catch (IOException e) {
       log.error("JSON 파싱 중 오류 발생");
-      throw new CustomException(ErrorCode.INVALID_REQUEST);
+      throw new GeneralException(ErrorStatus.INVALID_REQUEST);
     }
   }
 
@@ -103,7 +103,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     response.setContentType("application/json");
     response.setCharacterEncoding("UTF-8");
 
-    ApiResponse<LoginResponse> apiResponse = ApiResponse.onFailure(CommonErrorStatus.DUPLICATE_USERNAME, null);
+    ApiResponse<LoginResponse> apiResponse = ApiResponse.onFailure(ErrorStatus.DUPLICATE_USERNAME.getCode(),ErrorStatus.DUPLICATE_USERNAME.getMessage(), null);
     response.getWriter().write(objectMapper.writeValueAsString(apiResponse));
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
   }

@@ -2,11 +2,13 @@ package com.project.modac.apiPayload.code.status;
 
 import com.project.modac.apiPayload.code.BaseErrorCode;
 import com.project.modac.apiPayload.code.ErrorReasonDTO;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
-public enum CommonErrorStatus implements BaseErrorCode {
+@Getter
+public enum ErrorStatus implements BaseErrorCode {
 
 
     // 가장 일반적인 응답
@@ -24,8 +26,8 @@ public enum CommonErrorStatus implements BaseErrorCode {
     // Register
 
     DUPLICATE_USERNAME(HttpStatus.CONFLICT, "MEMBER402","이미 존재하는 아이디입니다"),
-
-    PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "MEMBER402","비밀번호가 일치하지 않습니다."),;
+    PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "MEMBER402","비밀번호가 일치하지 않습니다."),
+    USER_NOT_FOUND(HttpStatus.BAD_REQUEST,"MEMBER403" ,"회원을 찾을 수 없습니다.");
 
 
     private final HttpStatus httpStatus;

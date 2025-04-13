@@ -1,8 +1,8 @@
 package com.project.modac.service;
 
+import com.project.modac.apiPayload.GeneralException;
+import com.project.modac.apiPayload.code.status.ErrorStatus;
 import com.project.modac.domain.User;
-import com.project.modac.exception.CustomException;
-import com.project.modac.exception.ErrorCode;
 import com.project.modac.repository.UserRepository;
 import com.project.modac.web.dto.RegisterRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class RegisterService {
         //중복 회원일 경우 예외 발생
         userRepository.findOptionByUsername(username)
                 .ifPresent(user -> {
-                throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
+                throw new GeneralException(ErrorStatus.DUPLICATE_USERNAME);
                 });
 
         User user = User.builder()
