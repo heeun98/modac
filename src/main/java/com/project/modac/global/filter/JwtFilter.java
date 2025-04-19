@@ -28,7 +28,7 @@ public class JwtFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
     // 인증 생략 경로
-    if (request.getRequestURI().equals("/api/auth/login")) {
+    if (request.getRequestURI().equals("/api/login")) {
       filterChain.doFilter(request, response);
       return;
     }

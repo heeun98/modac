@@ -1,10 +1,10 @@
-package com.project.modac.web.controller.register;
+package com.project.modac.controller.register;
 
 
 import com.project.modac.apiPayload.ApiResponse;
+import com.project.modac.dto.RegisterRequestDto;
+import com.project.modac.dto.RegisterResponseDto;
 import com.project.modac.service.RegisterService;
-import com.project.modac.web.dto.RegisterRequestDto;
-import com.project.modac.web.dto.RegisterResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +16,7 @@ public class RegisterController {
 
     private final RegisterService registerService;
 
-    @PostMapping("/modac/register")
+    @PostMapping("/api/register")
     public ApiResponse<RegisterResponseDto> register(@RequestBody RegisterRequestDto request) {
         String username = registerService.register(request);
 

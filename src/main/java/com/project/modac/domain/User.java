@@ -4,12 +4,14 @@ package com.project.modac.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
 @Getter
-@Builder
 public class User extends BaseEntity{
 
     @Id
@@ -23,6 +25,9 @@ public class User extends BaseEntity{
     @Column
     private String password; // 로그인시 사용자 password;
 
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -35,14 +40,29 @@ public class User extends BaseEntity{
 
     private String hairLossLevel;
 
+
     @Embedded
     private Address address;
 
     private int transplantAmount;
 
+    public void addPost(Post post) {
+        post.setUser(this);
+        this.getPosts().add(post);
+    }
 
 
+    public User(String username, int transplantAmount) {
+        this.username = username;
+        this.transplantAmount = transplantAmount;
+    }
 
-
-
+    @Builder
+    public User(String username, String password, String nickname, String email, Address address) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        this.address = address;
+    }
 }

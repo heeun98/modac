@@ -1,4 +1,4 @@
-package com.project.modac.web.controller;
+package com.project.modac.controller;
 
 
 import lombok.AllArgsConstructor;

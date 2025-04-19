@@ -1,4 +1,4 @@
-package com.project.modac.web.dto;
+package com.project.modac.dto;
 
 import lombok.Data;
 

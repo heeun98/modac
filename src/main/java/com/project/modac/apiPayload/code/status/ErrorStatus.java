@@ -25,9 +25,10 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // Register
 
-    DUPLICATE_USERNAME(HttpStatus.CONFLICT, "MEMBER402","이미 존재하는 아이디입니다"),
+    DUPLICATE_USERNAME(HttpStatus.CONFLICT, "MEMBER401","이미 존재하는 아이디입니다"),
     PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "MEMBER402","비밀번호가 일치하지 않습니다."),
-    USER_NOT_FOUND(HttpStatus.BAD_REQUEST,"MEMBER403" ,"회원을 찾을 수 없습니다.");
+    USER_NOT_FOUND(HttpStatus.BAD_REQUEST,"MEMBER403" ,"회원을 찾을 수 없습니다."),
+    ADDRESS_NOMATCH(HttpStatus.BAD_REQUEST,"MEMBER404","주소 형식이 올바르지 않습니다.");
 
 
     private final HttpStatus httpStatus;
