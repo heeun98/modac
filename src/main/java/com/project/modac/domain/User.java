@@ -28,6 +28,9 @@ public class User extends BaseEntity{
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -49,6 +52,11 @@ public class User extends BaseEntity{
     public void addPost(Post post) {
         post.setUser(this);
         this.getPosts().add(post);
+    }
+
+    public void addComment(Comment comment) {
+        this.getComments().add(comment);
+        comment.setInUser(this);
     }
 
 

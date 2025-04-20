@@ -16,6 +16,7 @@ import java.util.List;
 public class Post extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,12 +49,33 @@ public class Post extends BaseEntity{
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostHashTag> hashTags = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostLikes> postLikes = new ArrayList<>();
+
+    public int postlikesCount() {
+        return postLikes.size();
+    }
+
 
     // 연관관계 편의 메서드
+
+
+    public void addPostLikes(PostLikes postLikes) {
+        this.postLikes.add(postLikes);
+        postLikes.setPost(this);
+    }
     public void addPostHashtag(PostHashTag posthashTag) {
         this.hashTags.add(posthashTag);
         posthashTag.setPost(this);
 
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setInPost(this);
     }
 
 
