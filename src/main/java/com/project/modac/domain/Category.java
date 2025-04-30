@@ -1,5 +1,7 @@
 package com.project.modac.domain;
 
+import com.project.modac.apiPayload.GeneralException;
+import com.project.modac.apiPayload.code.status.ErrorStatus;
 import lombok.Getter;
 
 @Getter
@@ -16,5 +18,14 @@ public enum Category {
 
     Category(String displayName) {
         this.displayName = displayName;
+    }
+
+    public static Category fromDisplayName(String displayName) {
+        for (Category category : Category.values()) {
+            if (category.getDisplayName().equals(displayName)) {
+                return category;
+            }
+        }
+        throw new GeneralException(ErrorStatus.NO_CATEGORY);
     }
 }

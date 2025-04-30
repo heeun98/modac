@@ -44,51 +44,54 @@ public class Test {
     @PostConstruct
     public void init() {
 
-        User user1 = new User("heeun98", 1000);
-        User user2 = new User("sanga9801", 2000);
-        User user3 = new User("adsfasd", 3000);
-        User user4 = new User("bsbsr", 4000);
-        User user5 = new User("42g2gdgd", 5000);
+        if (postRepository.count() == 0) {
+
+            User user1 = new User("heeun98", 1000);
+            User user2 = new User("sanga9801", 2000);
+            User user3 = new User("adsfasd", 3000);
+            User user4 = new User("bsbsr", 4000);
+            User user5 = new User("42g2gdgd", 5000);
 
 
-        userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(user3);
-        userRepository.save(user4);
-        userRepository.save(user5);
+            userRepository.save(user1);
+            userRepository.save(user2);
+            userRepository.save(user3);
+            userRepository.save(user4);
+            userRepository.save(user5);
 
-        for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 50; i++) {
 
-            if (i < 10) {
-                Post post1 = new Post(i + "모 리얼 후기 입니다~~~ ",
-                        i + "모를 심은 후기입니다.~~~~~ ",
-                        Category.FREE_TALK);
-                user1.addPost(post1);
-                Post save = postRepository.save(post1);
-            } else if (i < 20) {
-                Post post2 = new Post(i + "모 리얼 후기 입니다~~~ ",
-                        i + "모를 심은 후기입니다.~~~~~ ",
-                        Category.HAIR_MEDICINE);
-                user2.addPost(post2);
-                Post save = postRepository.save(post2);
-            } else if (i < 30) {
-                Post post3 = new Post(i + "모 리얼 후기 입니다~~~ ",
-                        i + "모를 심은 후기입니다.~~~~~ ",
-                        Category.HOSPITAL_QUESTION);
-                user3.addPost(post3);
-                Post save = postRepository.save(post3);
-            } else if (i < 40) {
-                Post post4 = new Post(i + "모 리얼 후기 입니다~~~ ",
-                        i + "모를 심은 후기입니다.~~~~~ ",
-                        Category.ALOPECIA_AREATA);
-                user4.addPost(post4);
-                Post save = postRepository.save(post4);
-            } else if (i < 50) {
-                Post post5 = new Post(i + "모 리얼 후기 입니다~~~ ",
-                        i + "모를 심은 후기입니다.~~~~~ ",
-                        Category.ALOPECIA_AREATA);
-                user5.addPost(post5);
-                Post save = postRepository.save(post5);
+                if (i < 10) {
+                    Post post1 = new Post(i + "모 리얼 후기 입니다~~~ ",
+                            i + "모를 심은 후기입니다.~~~~~ ",
+                            Category.FREE_TALK);
+                    user1.addPost(post1);
+                    Post save = postRepository.save(post1);
+                } else if (i < 20) {
+                    Post post2 = new Post(i + "모 리얼 후기 입니다~~~ ",
+                            i + "모를 심은 후기입니다.~~~~~ ",
+                            Category.HAIR_MEDICINE);
+                    user2.addPost(post2);
+                    Post save = postRepository.save(post2);
+                } else if (i < 30) {
+                    Post post3 = new Post(i + "모 리얼 후기 입니다~~~ ",
+                            i + "모를 심은 후기입니다.~~~~~ ",
+                            Category.HOSPITAL_QUESTION);
+                    user3.addPost(post3);
+                    Post save = postRepository.save(post3);
+                } else if (i < 40) {
+                    Post post4 = new Post(i + "모 리얼 후기 입니다~~~ ",
+                            i + "모를 심은 후기입니다.~~~~~ ",
+                            Category.ALOPECIA_AREATA);
+                    user4.addPost(post4);
+                    Post save = postRepository.save(post4);
+                } else if (i < 50) {
+                    Post post5 = new Post(i + "모 리얼 후기 입니다~~~ ",
+                            i + "모를 심은 후기입니다.~~~~~ ",
+                            Category.ALOPECIA_AREATA);
+                    user5.addPost(post5);
+                    Post save = postRepository.save(post5);
+                }
             }
         }
 

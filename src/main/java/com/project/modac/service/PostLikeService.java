@@ -40,8 +40,9 @@ public class PostLikeService {
                 .orElseThrow(() -> new GeneralException(ErrorStatus.NO_EXISTS));
 
         post.addPostLikes(postLikes);
+        int likeCount = post.addLikes();
         postRepository.save(post);
 
-        return post.postlikesCount();
+        return likeCount;
     }
 }

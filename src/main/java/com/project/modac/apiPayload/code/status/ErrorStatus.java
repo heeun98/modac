@@ -33,7 +33,8 @@ public enum ErrorStatus implements BaseErrorCode {
 
     //Community
     EXIST_LIKES(HttpStatus.BAD_REQUEST, "MEMBER405","이미 좋아요를 누르셨습니다."),
-    NO_EXISTS(HttpStatus.BAD_REQUEST,"POST401","존재하지 않는 게시글입니다.");
+    NO_EXISTS(HttpStatus.BAD_REQUEST,"POST401","존재하지 않는 게시글입니다."),
+    NO_CATEGORY(HttpStatus.BAD_REQUEST,"CATEGORY401","존재하지 않는 카테고리입니다.");
 
 
     private final HttpStatus httpStatus;

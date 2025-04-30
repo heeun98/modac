@@ -1,5 +1,4 @@
-package com.project.modac.controller;
-
+package com.project.modac.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +10,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseDto {
+public class PostCreateResponseDtoV2 {
 
-    private Long id;
+
+    private Long post_id;
+
+    private List<ImageResponseDto> postImages = new ArrayList<>();
 
 }

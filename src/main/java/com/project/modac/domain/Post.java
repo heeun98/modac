@@ -46,6 +46,13 @@ public class Post extends BaseEntity{
 
     private String content;
 
+    private int likesCount;
+
+    public int addLikes() {
+        likesCount++;
+        return likesCount;
+    }
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostHashTag> hashTags = new ArrayList<>();
 
@@ -55,12 +62,20 @@ public class Post extends BaseEntity{
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostLikes> postLikes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostImage> postImages = new ArrayList<>();
+
     public int postlikesCount() {
         return postLikes.size();
     }
 
 
     // 연관관계 편의 메서드
+
+    public void addPostImages(PostImage postImages) {
+        this.getPostImages().add(postImages);
+        postImages.setPost(this);
+    }
 
 
     public void addPostLikes(PostLikes postLikes) {
@@ -116,4 +131,9 @@ public class Post extends BaseEntity{
                 .build();
 
     }
+
+
+
+
+
 }

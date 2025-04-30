@@ -1,14 +1,12 @@
 package com.project.modac.repository;
 
-import com.project.modac.domain.Category;
-import com.project.modac.domain.Gender;
+import com.project.modac.domain.*;
 
-
-import com.project.modac.domain.Post;
 
 import com.project.modac.dto.PostResponseDto;
 import com.project.modac.dto.PostSearchCondition;
 import com.project.modac.dto.QPostResponseDto;
+import com.project.modac.repository.support.Querydsl4RepositorySupport;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,14 +17,65 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
+import static com.project.modac.domain.QComment.comment;
+import static com.project.modac.domain.QPost.*;
 import static com.project.modac.domain.QPost.post;
+import static com.project.modac.domain.QPostImage.*;
 import static com.project.modac.domain.QUser.user;
 
-@RequiredArgsConstructor
-public class PostRepositoryImpl implements PostRepositoryCustom{
+
+public class PostRepositoryImpl extends Querydsl4RepositorySupport implements PostRepositoryCustom{
 
 
     private final JPAQueryFactory queryFactory;
+
+    public PostRepositoryImpl(JPAQueryFactory queryFactory) {
+        super(Post.class);
+        this.queryFactory = queryFactory;
+    }
+
+
+    @Override
+    public Page<PostResponseDto> searchPage2(PostSearchCondition condition, Pageable pageable) {
+
+        return applyPagination(pageable,
+                contentQuery -> contentQuery
+                        .select(
+                                new QPostResponseDto(
+                                        post.id,
+                                        post.category,
+                                        post.title,
+                                        user.username,
+                                        post.createdDate,
+                                        post.likesCount
+                                )
+                        )
+                        .from(post)
+                        .join(post.user, user)
+                        .where(
+                                categoryEq(condition.getCategory()),
+                                genderEq(condition.getGender()),
+                                countGoe(condition.getGoe()),
+                                countLeo(condition.getLoe())
+                        ), countQuery -> countQuery
+                        .selectFrom(post)
+                        .join(post.user, user)
+                        .where(
+                                categoryEq(condition.getCategory()),
+                                genderEq(condition.getGender()),
+                                countGoe(condition.getGoe()),
+                                countLeo(condition.getLoe())
+                        )
+        );
+
+
+    }
+
+
+
+
+
+
 
     @Override
     public Page<PostResponseDto> searchPage(PostSearchCondition condition, Pageable pageable) {
@@ -37,7 +86,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
                                 post.category,
                                 post.title,
                                 user.username,
-                                post.createdDate
+                                post.createdDate,
+                                post.postLikes.size()
                         )
                 )
                 .from(post)
@@ -67,18 +117,37 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
     }
 
     private BooleanExpression countLeo(Integer loe) {
-        return (loe == null) ? null : post.transplantAmount.loe(loe);
+        return (loe == null) ? null : user.transplantAmount.loe(loe);
     }
 
     private BooleanExpression countGoe(Integer goe) {
-        return (goe == null) ? null : post.transplantAmount.goe(goe);
+        return (goe == null) ? null : user.transplantAmount.goe(goe);
     }
 
     private BooleanExpression genderEq(Gender gender) {
-        return gender == null ? null : user.gender.eq(gender);
+        return gender == null ? null : post.gender.eq(gender);
     }
 
     private BooleanExpression categoryEq(Category category) {
         return (category == null) ? null : post.category.eq(category);
     }
+
+
+
+    //게시글 상세보기 쿼리
+    @Override
+    public Post getPostDetail(Long postId) {
+
+        return queryFactory.
+                select(post)
+                .from(post)
+                .where(post.id.eq(postId))
+                .fetchOne();
+
+    }
+
+
+
+
+
 }
