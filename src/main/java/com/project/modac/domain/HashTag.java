@@ -24,4 +24,11 @@ public class HashTag {
         this.name = name;
     }
 
+
+    public static HashTag createHashTag(String name) {
+        return HashTag.builder()
+                .name(name)
+                .build();
+    }
+
 }

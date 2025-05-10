@@ -19,6 +19,15 @@ public class PostImage {
         this.contentType = contentType;
     }
 
+    //지금 작성한 createPostImage()도 "객체 생성 책임을 도메인 내부에 두자"는 DDD 철학이 잘 반영된 예
+    public static PostImage createPostImage(String uuidFilename, String originFilename, String contentType) {
+        return PostImage.builder()
+                .uuidFilename(uuidFilename)
+                .originFilename(originFilename)
+                .contentType(contentType)
+                .build();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -2,6 +2,9 @@ package com.project.modac.file;
 
 import lombok.Data;
 
+/**
+ * 업로드 파일 정보를 보관하는 클래스
+ */
 @Data
 public class UploadFile {
 

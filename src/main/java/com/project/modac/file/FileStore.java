@@ -10,11 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * 파일 저장과 관련되 업무 처리 클래스
+ */
 @Component
 public class FileStore {
 
 
-
+    //application.yml 에 경로 지정해 놓았음
     @Value("${file.dir}")
     private String fileDir;
 
@@ -40,11 +43,16 @@ public class FileStore {
             return null;
         }
 
+        //사진명.확장자 : 문자열 형태로 반환
         String originalFilename = multipartFile.getOriginalFilename();
+
+        //해당 파일 content-type 을 반환
         String contentType = multipartFile.getContentType();
 
+        //uuid 로 변환한 문자열을 반환
         String storeFileName = createStoreFileName(originalFilename);
 
+        //로컬에 저장해 준다.
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
 
         return new UploadFile(originalFilename, storeFileName, contentType);

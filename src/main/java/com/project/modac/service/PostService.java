@@ -96,6 +96,7 @@ public class PostService {
                     .originFilename(uploadFile.getUploadFileName())
                     .contentType(uploadFile.getContentType())
                     .build();
+
             newPost.addPostImages(image);
 
 
@@ -120,6 +121,67 @@ public class PostService {
 
     }
 
+
+
+
+    @Transactional
+    public PostCreateResponseDtoV2 postDetailServiceV3(PostCreateRequestDtoV2 request, String username) throws IOException {
+
+        User user = userRepository.findOptionByUsername(username)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.USER_NOT_FOUND));
+
+        Post newPost = getPostV2(request);
+
+        createHashTag(request, newPost);
+
+        List<UploadFile> uploadFiles = fileStore.storeFiles(request.getImageFiles());
+
+        PostCreateResponseDtoV2 responseDtoV2 = new PostCreateResponseDtoV2();
+
+        //데이터베이스에 저장
+        for (UploadFile uploadFile : uploadFiles) {
+
+            PostImage postImage = PostImage.createPostImage(
+                    uploadFile.getStoreFileName(), uploadFile.getUploadFileName(), uploadFile.getContentType()
+            );
+
+            newPost.addPostImages(postImage);
+
+
+            ImageResponseDto imageResponseDto = ImageResponseDto.builder()
+                    .originalFilename(uploadFile.getUploadFileName())
+                    .uuidFilename(uploadFile.getStoreFileName())
+                    .build();
+
+
+            responseDtoV2.getPostImages().add(imageResponseDto);
+        }
+
+        Post post = postRepository.save(newPost);
+
+        user.addPost(newPost);
+
+
+
+        responseDtoV2.setPost_id(post.getId());
+
+        return responseDtoV2;
+
+    }
+
+    private void createHashTag(PostCreateRequestDtoV2 request, Post newPost) {
+        for (String stringHashTag : request.getHashtags()) {
+
+            HashTag hashTag = hashtagRepository.findByName(stringHashTag)
+                    .orElseGet(() -> {
+                        HashTag newHashTag = HashTag.createHashTag(stringHashTag);
+                        return hashtagRepository.save(newHashTag);
+                    });
+
+            PostHashTag postHashTage = PostHashTag.createPostHashTage(hashTag);
+            newPost.addPostHashtag(postHashTage);
+        }
+    }
 
 
     private static Post getPost(PostCreateRequestDtoV1 request) {
