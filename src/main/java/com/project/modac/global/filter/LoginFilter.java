@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -70,6 +71,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     // 헤더에 AccessToken 추가
     response.addHeader("Authorization", "Bearer " + accessToken);
+
+    // 2) JS에서 읽을 수 있도록 expose-header 추가
+    response.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION);
+
+
 
     // 쿠키에 refreshToken 추가
     Cookie cookie = new Cookie("refreshToken", refreshToken);

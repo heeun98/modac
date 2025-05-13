@@ -6,6 +6,7 @@ import com.project.modac.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -52,7 +53,8 @@ public class SecurityConfig {
         .formLogin(AbstractHttpConfigurer::disable)
         // 경로별 인가 작업
         .authorizeHttpRequests((authorize) -> authorize
-            .requestMatchers("/docs/**", "/api/register", "/v3/**", "/api/login", "/api/community/**", "/api/**","/api/auth/**","/").permitAll() // TODO: 인증 생략 경로 설정  회원가입: "/api/user/register", 로그인: "/api/auth/login"
+            .requestMatchers("/docs/**", "/api/register", "/v3/**", "/api/login", "/api/community/**", "/api/**","/api/auth/**","/").permitAll() // TODO: 인증 생략 경로 설정  회원가입: "/api/user/register", 로그인: "/api/auth/login"//
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().authenticated() //나머지는 인증이 된 사용자만 가능
         )
             //.authorizeHttpRequests(auth -> auth

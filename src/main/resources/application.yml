@@ -28,5 +28,5 @@ file:
 
 jwt:
   secret-key: zcR9P80KqqLmF5hT8dQ7VzXwJJgNZp3qrTy4FcRNm8L9H2zBxPVwP7L8RcNF5G2Q3xAW9cK6d
-  access-exp-time: 3600000 # 액세스 토큰 만료 시간 (밀리초 단위, 예: 1시간)
-  refresh-exp-time: 60480000 # 리프레시 토큰 만료 시간
+  access-exp-time: 36000000 # 액세스 토큰 만료 시간 (밀리초 단위, 예: 1시간)
+  refresh-exp-time: 604800000 # 리프레시 토큰 만료 시간
