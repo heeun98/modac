@@ -11,15 +11,20 @@ import com.project.modac.service.CommentService;
 import com.project.modac.service.PostLikeService;
 import com.project.modac.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.web.bind.annotation.*;
 
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 @RestController
 @RequiredArgsConstructor
@@ -111,6 +116,19 @@ public class PostController {
         int likeCount = postLikeService.postLike(postId, userDetails.getUsername());
         return ApiResponse.onSuccess(new LikeResponseDto(likeCount));
     }
+
+    @ResponseBody
+    @GetMapping("uploads/{filename}")
+    public ResponseEntity<UrlResource> downloadImage(@PathVariable String filename) throws MalformedURLException {
+
+        //file:/User/../s"
+        UrlResource resource = new UrlResource("file:" + fileStore.getFullPath(filename));
+
+        return ResponseEntity.ok()
+                .contentType(MediaTypeFactory.getMediaType(filename).orElse(MediaType.APPLICATION_OCTET_STREAM))
+                .body(resource);
+    }
+
 
 
 }

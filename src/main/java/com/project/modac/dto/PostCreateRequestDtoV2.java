@@ -28,7 +28,7 @@ public class PostCreateRequestDtoV2 {
 
     private Gender gender;
 
-    private SergeryProgress sergeryProgress;
+    private SergeryProgress surgeryProgress;
 
     private int transplantCount;
 

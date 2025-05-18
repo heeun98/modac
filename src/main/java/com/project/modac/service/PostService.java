@@ -204,7 +204,7 @@ public class PostService {
         Post newPost = Post.createPost(
                 request.getCategory(),
                 request.getGender(),
-                request.getSergeryProgress(),
+                request.getSurgeryProgress(),
                 request.getTransplantCount(),
                 SatisfactionLevel.fromValue(request.getSatisfactionScore()),
                 request.getTitle(),

@@ -53,7 +53,7 @@ public class SecurityConfig {
         .formLogin(AbstractHttpConfigurer::disable)
         // 경로별 인가 작업
         .authorizeHttpRequests((authorize) -> authorize
-            .requestMatchers("/docs/**", "/api/register", "/v3/**", "/api/login", "/api/community/**", "/api/**","/api/auth/**","/").permitAll() // TODO: 인증 생략 경로 설정  회원가입: "/api/user/register", 로그인: "/api/auth/login"//
+            .requestMatchers("/docs/**", "/api/register", "/v3/**", "/api/login", "/api/community/**", "/api/**","/api/auth/**","/","/uploads/**").permitAll() // TODO: 인증 생략 경로 설정  회원가입: "/api/user/register", 로그인: "/api/auth/login"//
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().authenticated() //나머지는 인증이 된 사용자만 가능
         )

@@ -18,8 +18,10 @@ import org.springframework.data.support.PageableExecutionUtils;
 import java.util.List;
 
 import static com.project.modac.domain.QComment.comment;
+import static com.project.modac.domain.QHashTag.*;
 import static com.project.modac.domain.QPost.*;
 import static com.project.modac.domain.QPost.post;
+import static com.project.modac.domain.QPostHashTag.*;
 import static com.project.modac.domain.QPostImage.*;
 import static com.project.modac.domain.QUser.user;
 
@@ -141,6 +143,8 @@ public class PostRepositoryImpl extends Querydsl4RepositorySupport implements Po
         return queryFactory.
                 select(post)
                 .from(post)
+                .leftJoin(post.hashTags, postHashTag).fetchJoin()
+                .leftJoin(postHashTag.hashTag, hashTag).fetchJoin()
                 .where(post.id.eq(postId))
                 .fetchOne();
 

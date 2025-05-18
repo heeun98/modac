@@ -2,6 +2,7 @@ package com.project.modac.dto;
 
 
 import com.project.modac.domain.Comment;
+import com.project.modac.domain.HashTag;
 import com.project.modac.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,8 @@ public class PostDetailResponseDto {
 
     private String title;
 
+    private String gender;
+
     private String category;
 
     private String sergeryProgress;
@@ -41,6 +44,8 @@ public class PostDetailResponseDto {
 
     private List<ShowCommentForPostDto> comments = new ArrayList<>();
 
+    private List<String> hashTags = new ArrayList<>();
+
 
 
 
@@ -52,11 +57,15 @@ public class PostDetailResponseDto {
                 .title(post.getTitle())
                 .category(post.getCategory().getDisplayName())
                 .sergeryProgress(post.getSergeryProgress().getProgress())
+                .gender(post.getGender().getGender())
                 .transplantAmount(post.getTransplantAmount())
                 .satisfactionLevel(post.getSatisfactionLevel().getValue())
                 .content(post.getContent())
                 .fileNames(post.getPostImages().stream()
                         .map( postImage -> postImage.getUuidFilename())
+                        .collect(Collectors.toList()))
+                .hashTags(post.getHashTags().stream()
+                        .map(postHashTag -> postHashTag.getHashTag().getName())
                         .collect(Collectors.toList()))
                 .likeCount(post.getLikesCount())
                 .comments(post.getComments().stream()

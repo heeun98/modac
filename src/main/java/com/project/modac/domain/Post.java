@@ -82,6 +82,7 @@ public class Post extends BaseEntity{
         this.postLikes.add(postLikes);
         postLikes.setPost(this);
     }
+
     public void addPostHashtag(PostHashTag posthashTag) {
         this.hashTags.add(posthashTag);
         posthashTag.setPost(this);

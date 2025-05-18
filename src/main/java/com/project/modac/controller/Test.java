@@ -40,6 +40,7 @@ public class Test {
         return ApiResponse.onSuccess(result);
 
     }
+/*
 
     @PostConstruct
     public void init() {
@@ -97,6 +98,7 @@ public class Test {
 
     }
 
+*/
 
     @Data
     static class PostRequestDtoV1 {
