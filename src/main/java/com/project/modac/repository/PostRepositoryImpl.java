@@ -119,11 +119,11 @@ public class PostRepositoryImpl extends Querydsl4RepositorySupport implements Po
     }
 
     private BooleanExpression countLeo(Integer loe) {
-        return (loe == null) ? null : user.transplantAmount.loe(loe);
+        return (loe == null) ? null : post.transplantAmount.loe(loe);
     }
 
     private BooleanExpression countGoe(Integer goe) {
-        return (goe == null) ? null : user.transplantAmount.goe(goe);
+        return (goe == null) ? null : post.transplantAmount.goe(goe);
     }
 
     private BooleanExpression genderEq(Gender gender) {
